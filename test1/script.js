@@ -21,62 +21,65 @@ class Mouse {
     }
 }
 
-var mouse = new Mouse(0,0)
-var positionArray = [
-    { x: 16, y: 343 },
-    { x: 581, y: 148 },
-    { x: 522, y: 133 },
-    { x: 725, y: 311 },
-    { x: 479, y: 295 },
-    { x: 726, y: 314 },
-    { x: 454, y: 445 }, 
-    { x: 669, y: 254 },
-    { x: 546, y: 498 }
-]
+var mouse = null
 var count = null
+var positionArray = []
 
 const handleMouseMove = (e) => {
+    if (mouse === null) {
+        mouse = new Mouse(e.clientX, e.clientY)
+    }
     mouse.setX(e.clientX).setY(e.clientY)
 }
-
 
 document.addEventListener('mousemove', handleMouseMove);
 
 const savePosition = () => {
-        positionArray.push({
-            x: mouse.getX(), 
-            y: mouse.getY()
-        })
+    positionArray.push({
+        x: mouse.getX(),
+        y: mouse.getY()
+    })
 }
 
 const countdown = () => {
     document.getElementById('countdown').innerHTML = count
     count -= 1
-    const idCount = setInterval(()=>{
+    const idCount = setInterval(() => {
         document.getElementById('countdown').innerHTML = count
         count -= 1
     }, 800)
+
     return idCount
 }
 
 const handleLaunchClick = () => {
     positionArray = []
     count = 3
+
     const idCount = countdown()
-    setTimeout(()=> {
+
+    setTimeout(() => {
         clearInterval(idCount)
-        const id = setInterval(savePosition, 100)
-        setTimeout(()=> {
+        document.getElementById('countdown').innerHTML = 'RECORDING !'
+        const id = setInterval(savePosition, 50)
+
+        setTimeout(() => {
             clearInterval(id)
             document.getElementById('countdown').innerHTML = 'DONE !'
         }, 5000)
+
     }, 3000)
-    
+
 }
 
 const clone = (index, target) => {
-    target.style.top = positionArray[index].y + 'px'
-    target.style.left = positionArray[index].x + 'px'
+    target.animate([{
+        top: positionArray[index].y + 'px',
+        left: positionArray[index].x + 'px'
+    }], {
+        duration: 1000, // ??
+    })
+
     return index += 1
 }
 
@@ -84,14 +87,17 @@ const handleCloneClick = () => {
     let index = 0
     let target = document.createElement('div')
     target.classList.add('target')
+    target.style.top = positionArray[index].y + 'px'
+    target.style.left = positionArray[index].x + 'px'
     document.body.appendChild(target)
 
-    const id = setInterval(()=>{
+    const id = setInterval(() => {
         index = clone(index, target)
+    }, 50)
 
-    }, 100)
-    setTimeout(()=> {
+    setTimeout(() => {
         clearInterval(id)
+        document.body.removeChild(target)
     }, 5000)
 }
 
