@@ -1,0 +1,9 @@
+body {
+    position: relative;
+}
+.target {
+    width: 1rem;
+    height: 1rem;
+    background-color: aquamarine;
+    position: absolute;
+}
