@@ -5,15 +5,55 @@ const grid = [
     [0, 0, 0, 0]
 ]
 
-const generate = (grid) => {
-    grid.forEach((row, y) => {
-        row.forEach((el, x) => {
-            if ('B' !== el) {
-                let count = 0
-                console.log(row);
-            }
-        })
-    })
+const test = [
+    ['B', 'B', 'B', 'B'],
+    ['B', 'B', 'B', 'B'],
+    ['B', 0, 'B', 'B'],
+    ['B', 'B', 'B', 'B']
+]
+
+const countBomb = (grid, x, y) => {
+    let count = 0
+
+    if (grid[y][x - 1] && grid[y][x - 1] === 'B') {
+        count++
+    }
+
+    if (grid[y][x + 1] && grid[y][x + 1] === 'B') {
+        count++
+    }
+
+    if (grid[y + 1]) {
+        if (grid[y + 1][x] && grid[y + 1][x] === 'B') {
+            count++
+        }
+
+        if (grid[y + 1][x + 1] && grid[y + 1][x + 1] === 'B') {
+            count++
+        }
+
+        if (grid[y + 1][x - 1] && grid[y + 1][x - 1] === 'B') {
+            count++
+        }
+    }
+
+    if (grid[y - 1]) {
+        if (grid[y - 1][x] && grid[y - 1][x] === 'B') {
+            count++
+        }
+
+        if (grid[y - 1][x - 1] && grid[y - 1][x - 1] === 'B') {
+            count++
+        }
+
+        if (grid[y - 1][x + 1] && grid[y - 1][x + 1] === 'B') {
+            count++
+        }
+    }
+
+    return count
 }
 
-generate(grid)
+const generate = (grid) => grid.map((row, y) => row.map((el, x) => 'B' === el ? el : countBomb(grid, x, y)))
+
+console.log(generate(grid))

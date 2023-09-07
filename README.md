@@ -28,7 +28,7 @@ Les cellules du tableau contenant la valeur “B” représentent les bombes.
 Votre programmedevra renvoyer le tableau suivant :
 
 
-`const grid = [ [1, ’B’, 2, 1], [0, 3, ’B’, 3], [0, 2, ’B’, ’B’], [0, 1, 2, 2] ];`
+`const grid = [ [1, ’B’, 2, 1], [1, 3, ’B’, 3], [0, 2, ’B’, ’B’], [0, 1, 2, 2] ];`
 
 
 …que l’on peut représenter ainsi :
