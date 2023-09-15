@@ -5,13 +5,6 @@ const grid = [
     [0, 0, 0, 0]
 ]
 
-const test = [
-    ['B', 'B', 'B', 'B'],
-    ['B', 'B', 'B', 'B'],
-    ['B', 0, 'B', 'B'],
-    ['B', 'B', 'B', 'B']
-]
-
 const countBomb = (grid, x, y) => {
     let count = 0
 
@@ -55,5 +48,3 @@ const countBomb = (grid, x, y) => {
 }
 
 const generate = (grid) => grid.map((row, y) => row.map((el, x) => 'B' === el ? el : countBomb(grid, x, y)))
-
-console.log(generate(grid))
